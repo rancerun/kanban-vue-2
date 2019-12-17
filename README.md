@@ -1,24 +1,26 @@
-# kanban2
+<div align="center">
+<h1>kanban</h1>
 
-## Project setup
+<p><b>Kanban (看板) - Japanese for a viewing board or a board of tasks.</b></p>
+<p>Lists are a great way to organize thoughts and ideas to alleviate mental load.</p>
+<p>Find an implementation you like and add to it!</p>
+<br>
+<br>
+</div>
+
+- Kanban
+  - [Vue](#vue)
+
+# Vue
+
+## Installation
 ```
+cd kanban2
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+## Start development server
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
