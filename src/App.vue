@@ -2,8 +2,7 @@
   <div id="app">
     <Column
       v-for="topic in kanban"
-      :key="topic.id"
-      :id="topic.id"
+      :key="topic.title"
       :title="topic.title"
       :bubblesArray="topic.bubblesArray"
       @left="shiftLeft"
@@ -24,23 +23,19 @@ export default {
     return {
       kanban: [
         {
-          id: 1,
-          title: 'todo',
+          title: 'TODO',
           bubblesArray: []
         },
         {
-          id: 2,
-          title: 'in-progress',
+          title: 'IN-PROGRESS',
           bubblesArray: []
         },
         {
-          id: 3,
-          title: 'completed',
+          title: 'COMPLETED',
           bubblesArray: []
         },
         {
-          id: 4,
-          title: 'misc',
+          title: 'MISC',
           bubblesArray: []
         },
         

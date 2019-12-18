@@ -1,37 +1,41 @@
 <template>
-  <div v-if=me class="bubble">
-    <h1>{{ title }}</h1>
-    <button
-      @click="switchLeft"
-      class="button left"
-    >
-      &lt;
-    </button>
-    <button
-      @click="switchRight"
-      class="button right"
-    >
-      &gt;
-    </button>
-    <form @submit.prevent="editSaved">
+  <div v-if="me" class="bubble">
+    <img src="@/assets/list-icon.png">
+    <div id="text-button-parent">
       <input
-        v-model="editText"
-        :type="this.showInput ? 'text' : 'hidden'"
-        :placeholder = "this.title"
+        ref="input"
+        v-if="showInput"
+        v-model="title"
+        @keyup.enter="sendEdit"
+        @blur="sendEdit"
       >
-      <button
-        @click="editMe"
-        class="button"
+      <h1
+        v-else
+        @click="sendEdit"
       >
-        Edit
-      </button>
-    </form>
-    <button
-      @click="deleteMe"
-      class="button"
-    >
-      Delete
-    </button>
+        {{ title }}
+      </h1>
+      <div id="button-container">
+        <button
+          @click="switchLeft"
+          class="button"
+        >
+          &lt;
+        </button>
+        <button
+          @click="switchRight"
+          class="button"
+        >
+          &gt;
+        </button>
+        <button
+          @click="deleteMe"
+          class="button"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -56,18 +60,21 @@
       switchRight () {
         this.$emit('right', this.index)
       },
-      editMe () {
-        this.showInput = this.showInput ? false : true
-      },
-      editSaved () {
+      sendEdit() {
         if (!this.showInput) {
-          this.title = this.editText
+          this.showInput = !this.showInput
+          this.$nextTick(() => {
+            this.$refs.input.focus()
+          })
+        } else {
+          this.$emit('finished', this.index, this.title)
+          this.showInput = !this.showInput
         }
       },
       deleteMe () {
         this.me = false
       }
-    }
+    } 
   }
 </script>
 
@@ -76,22 +83,38 @@
   .bubble {
     display: flex;
     flex-direction: row;
-    align-content: justify-content;
-    color: white;
-    border-style: solid;
-    margin: 16px;
+    /*align-content: justify-content;*/
+    border-radius: 8px;
+    background-color: white;
+    margin: 8px;
+    padding: 16px;
+    font-color: black;
+  }
+
+  #button-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #text-button-parent {
+    margin-left: 8px;
   }
 
   .button {
-    width: 64px;
-    margin: 8px;
+    font-color: black;
+    width: 48px;
+    margin: 4px;
   }
 
-  .left {
-    /*align-self: flex-start;*/
+  img {
+    height: 48px;
+    width: 48px;
+    border-radius: 50px;
   }
 
-  .right {
-    /*align-self: flex-end;*/
+  h1 {
+    font-size: 16px;
+    text-align: left;
+    margin-left: 4px;
   }
 </style>

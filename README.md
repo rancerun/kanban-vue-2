@@ -15,7 +15,7 @@
 
 ## Installation
 ```
-cd kanban2
+cd kanban
 yarn install
 ```
 

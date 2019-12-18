@@ -1,28 +1,33 @@
 <template>
   <div class="column">
-    <h1>{{ title }}</h1>
+    <div class="title-bar">
+      <img class="logo" src="@/assets/idea.png">
+      <h1>{{ title }}</h1>
+    </div>
     <div v-if="bubblesArray">
       <Bubble
         v-for="(item, index) in bubblesArray"
         :title="item.title"
-        :key="item.id"
-        :index=index
+        :key="index"
+        :index="index"
         @left="moveItemLeft"
         @right="moveItemRight"
+        @finished="finishFunction"
         v-on:remove="bubblesArray.splice(index, 1)"
       />
     </div>
     <form v-on:submit.prevent="addNewItem">
-      <label for="new-item">add task: </label>
-      <input
-        v-model="newItemText"
-        id="new-item"
-        placeholder="Copying porn links"
-      >
+      <label>add task: 
+        <input
+          v-model="newItemText"
+          placeholder="Copying porn links"
+        >
+      </label>
       <button>submit</button>
     </form>
   </div>
 </template>
+
 
 <script>
   import Bubble from './Bubble.vue'
@@ -36,7 +41,7 @@
     },
     data: function () {
       return {
-        itemId: 0
+        newItemText: ''
       }
     },
     components: {
@@ -45,20 +50,27 @@
     methods: {
       addNewItem () {
         this.bubblesArray.push({
-          id: this.itemId++,
           title: this.newItemText
         })
         this.newItemText = ''
       },
-      moveItemLeft (value) {
-        if (this.id > 1) {
-          this.$emit('left', this.id, value)          
+      moveItemLeft (index) {
+        if (this.title !== 'TODO') {
+          this.$emit('left', this.title, index)          
         }
       },
-      moveItemRight (value) {
-        if (this.id < 4) {
-          this.$emit('right', this.id, value)
+      moveItemRight (index) {
+        if (this.title !== "MISC") {
+          this.$emit('right', this.title, index)
         }
+      },
+      finishFunction(index, title) {
+        this.bubblesArray[index].title = title
+      }
+    },
+    computed: {
+      input () {
+        return this.title + "new-item"
       }
     }
   }
@@ -67,18 +79,37 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .column{
-    border-radius: 4px;
     display: flex;
     flex-direction: column;
+    border-radius: 16px;
     min-height: 80vh;
     min-width: 20%;
-    background-color: #4153AF;
-    margin: 0 8px;
+    background-color: #F5F6FD;
+    margin: 0 16px;
+  }
+
+  .logo {
+    height: 32px;
+    width: 32px;
+  }
+
+  .title-bar {
+    display: flex;
+    flex-direction: row;
+    padding-top: 8px;
+    padding-left: 16px;
+  }
+
+  img {
+    padding: 8px;
   }
 
   h1 {
-    color: #fff;
-    font-size: 18px;
+    text-align: left;
+    padding-top: 4px;
+    color: #828491;
+    font-size: 16px;
+    font-weight: 900;    
   }
 
   form {
