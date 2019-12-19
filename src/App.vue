@@ -45,29 +45,29 @@ export default {
   },
   mounted () {
     if (localStorage.kanban) {
-      this.kanban = JSON.parse(localStorage.kanban)
+      this.kanban = JSON.parse(localStorage.kanban);
     }
   },
   watch: {
     kanban: {
       handler(newKanban) {
-        localStorage.setItem('kanban', JSON.stringify(newKanban))
+        localStorage.setItem('kanban', JSON.stringify(newKanban));
       },
       deep: true
     }
   },
   methods: {
     moveLeft (columnIndex, itemIndex) {
-      const curColumnBubArr = this.kanban[columnIndex].bubblesArray
-      const curBubble = curColumnBubArr[itemIndex]
-      curColumnBubArr.splice(curBubble, 1)
-      this.kanban[columnIndex - 1].bubblesArray.unshift(curBubble)
+      const curColumnBubArr = this.kanban[columnIndex].bubblesArray;
+      const curBubble = curColumnBubArr[itemIndex];
+      curColumnBubArr.splice(itemIndex, 1);
+      this.kanban[columnIndex - 1].bubblesArray.push(curBubble);
     },
     moveRight (columnIndex, itemIndex) {
-      const curColumnBubArr = this.kanban[columnIndex].bubblesArray
-      const curBubble = curColumnBubArr[itemIndex]
-      curColumnBubArr.splice(curBubble, 1)
-      this.kanban[columnIndex + 1].bubblesArray.unshift(curBubble)
+      const curColumnBubArr = this.kanban[columnIndex].bubblesArray;
+      const curBubble = curColumnBubArr[itemIndex];
+      curColumnBubArr.splice(itemIndex, 1);
+      this.kanban[columnIndex + 1].bubblesArray.push(curBubble);
     }
   }
 }

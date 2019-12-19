@@ -10,13 +10,12 @@
         @click="addNewBubble"
       >
     </div>
-    <div v-if="bubblesArray">
+    <div v-if="bubblesArray.length > 0">
       <Bubble
         v-for="(bubble, index) in bubblesArray"
-        :key="index"
+        :key="JSON.stringify(bubble)"
         :index="index"
         :text="bubble.text"
-        ref="bubbleChild"
         @left="sendLeftCol"
         @right="sendRightCol"
         @finished="finishFunction"
@@ -41,27 +40,21 @@
       Bubble
     },
     methods: {
-      addNewBubble () {
-        this.bubblesArray.unshift({
-          text: ""
-        })
-        this.$nextTick(() => {
-          this.$refs.bubbleChild[0].sendEdit()
-          // debugger;
-        })
+      addNewBubble (event, text = "") {
+        this.bubblesArray.unshift({ text });
       },
       sendLeftCol (bubbleIndex) {
         if (this.index > 0) {
-          this.$emit('left', this.index, bubbleIndex)          
+          this.$emit('left', this.index, bubbleIndex);
         }
       },
       sendRightCol (bubbleIndex) {
-        if (this.index < 4) {
-          this.$emit('right', this.index, bubbleIndex)
+        if (this.index < 3) {
+          this.$emit('right', this.index, bubbleIndex);
         }
       },
-      finishFunction(index, text) {
-        this.bubblesArray[index].text = text
+      finishFunction(index, newText) {
+        this.bubblesArray[index].text = newText;
       }
     }
   }

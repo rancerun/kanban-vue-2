@@ -49,26 +49,31 @@
         hideInput: true
       }
     },
+    mounted () {
+      if (this.text.length === 0) {
+        this.sendEdit();
+      }
+    },
     methods: {
       sendLeftBub () {
-        this.$emit('left', this.index)          
+        this.$emit('left', this.index);
       },
       sendRightBub () {
-        this.$emit('right', this.index)
+        this.$emit('right', this.index);
       },
       sendEdit() {
         if (this.hideInput) {
-          this.hideInput = !this.hideInput
+          this.hideInput = !this.hideInput;
           this.$nextTick(() => {
-            this.$refs.input.focus()
-          })
+            this.$refs.input.focus();
+          });
         } else {
-          this.$emit('finished', this.index, this.currentText)
-          this.hideInput = !this.hideInput
+          this.$emit('finished', this.index, this.currentText);
+          this.hideInput = !this.hideInput;
         }
       },
       deleteMe () {
-        this.$emit('delete')
+        this.$emit('delete');
       }
     } 
   }
