@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <Column
-      v-for="topic in kanban"
-      :key="topic.title"
+      v-for="(topic, index) in kanban"
+      :key="index"
+      :index="index"
       :title="topic.title"
       :bubblesArray="topic.bubblesArray"
-      @left="shiftLeft"
-      @right="shiftRight"
+      @left="moveLeft"
+      @right="moveRight"
     />
   </div>
 </template>
+
 
 <script>
 import Column from '@/components/Column.vue'
@@ -19,7 +21,7 @@ export default {
   components: {
     Column
   },
-  data: function () {
+  data () {
     return {
       kanban: [
         {
@@ -37,51 +39,50 @@ export default {
         {
           title: 'MISC',
           bubblesArray: []
-        },
-        
+        }
       ]
     }
   },
-  mounted() {
+  mounted () {
     if (localStorage.kanban) {
       this.kanban = JSON.parse(localStorage.kanban)
     }
   },
   watch: {
     kanban: {
-      handler: function (newKanban) {
+      handler(newKanban) {
         localStorage.setItem('kanban', JSON.stringify(newKanban))
       },
       deep: true
     }
   },
   methods: {
-    shiftLeft (columnId, itemIndex) {
-      const currentColumn = this.kanban[columnId - 1]
-      const item = currentColumn.bubblesArray[itemIndex]
-      this.kanban[columnId - 2].bubblesArray.push(item)
-      currentColumn.bubblesArray.splice(itemIndex, 1)
+    moveLeft (columnIndex, itemIndex) {
+      const curColumnBubArr = this.kanban[columnIndex].bubblesArray
+      const curBubble = curColumnBubArr[itemIndex]
+      curColumnBubArr.splice(curBubble, 1)
+      this.kanban[columnIndex - 1].bubblesArray.unshift(curBubble)
     },
-    shiftRight (columnId, itemIndex) {
-      const currentColumn = this.kanban[columnId - 1]
-      const item = currentColumn.bubblesArray[itemIndex]
-      this.kanban[columnId].bubblesArray.push(item)
-      currentColumn.bubblesArray.splice(itemIndex, 1)
+    moveRight (columnIndex, itemIndex) {
+      const curColumnBubArr = this.kanban[columnIndex].bubblesArray
+      const curBubble = curColumnBubArr[itemIndex]
+      curColumnBubArr.splice(curBubble, 1)
+      this.kanban[columnIndex + 1].bubblesArray.unshift(curBubble)
     }
   }
 }
 </script>
 
+
 <style>
 #app {
+  display: flex;
+  flex-direction: row;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  display: flex;
-  flex-direction: row;
-  /*align-items: justify-content;*/
 }
 </style>

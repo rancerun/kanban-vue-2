@@ -1,36 +1,32 @@
 <template>
-  <div v-if="me" class="bubble">
+  <div class="bubble">
     <img src="@/assets/list-icon.png">
     <div id="text-button-parent">
-      <input
-        ref="input"
-        v-if="showInput"
-        v-model="title"
-        @keyup.enter="sendEdit"
-        @blur="sendEdit"
-      >
       <h1
-        v-else
+        v-if="hideInput"
         @click="sendEdit"
       >
-        {{ title }}
+        {{ text }}
       </h1>
+      <input
+        v-else
+        ref="input"
+        v-model="currentText"
+        @blur="sendEdit"
+      >
       <div id="button-container">
         <button
-          @click="switchLeft"
-          class="button"
+          @click="sendLeftBub"
         >
           &lt;
         </button>
         <button
-          @click="switchRight"
-          class="button"
+          @click="sendRightBub"
         >
           &gt;
         </button>
         <button
           @click="deleteMe"
-          class="button"
         >
           Delete
         </button>
@@ -44,35 +40,35 @@
   export default {
     names: 'Bubble',
     props: {
-      title: String,
+      text: String,
       index: Number
     },
-    data: function () {
+    data () {
       return {
-        me: true,
-        showInput: false
+        currentText: this.text,
+        hideInput: true
       }
     },
     methods: {
-      switchLeft () {
+      sendLeftBub () {
         this.$emit('left', this.index)          
       },
-      switchRight () {
+      sendRightBub () {
         this.$emit('right', this.index)
       },
       sendEdit() {
-        if (!this.showInput) {
-          this.showInput = !this.showInput
+        if (this.hideInput) {
+          this.hideInput = !this.hideInput
           this.$nextTick(() => {
             this.$refs.input.focus()
           })
         } else {
-          this.$emit('finished', this.index, this.title)
-          this.showInput = !this.showInput
+          this.$emit('finished', this.index, this.currentText)
+          this.hideInput = !this.hideInput
         }
       },
       deleteMe () {
-        this.me = false
+        this.$emit('delete')
       }
     } 
   }
@@ -83,12 +79,11 @@
   .bubble {
     display: flex;
     flex-direction: row;
-    /*align-content: justify-content;*/
     border-radius: 8px;
     background-color: white;
     margin: 8px;
     padding: 16px;
-    font-color: black;
+    color: black;
   }
 
   #button-container {
@@ -100,8 +95,21 @@
     margin-left: 8px;
   }
 
-  .button {
-    font-color: black;
+  h1 {
+    text-align: left;
+    font-size: 16px;
+    margin-left: 4px;
+  }
+
+  input {
+    height: 24px;
+    margin-top: 4px;
+    padding: 0;
+    border: 0;
+  }
+
+  button {
+    color: black;
     width: 48px;
     margin: 4px;
   }
@@ -110,11 +118,5 @@
     height: 48px;
     width: 48px;
     border-radius: 50px;
-  }
-
-  h1 {
-    font-size: 16px;
-    text-align: left;
-    margin-left: 4px;
   }
 </style>

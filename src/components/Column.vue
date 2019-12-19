@@ -1,82 +1,73 @@
 <template>
   <div class="column">
-    <div class="title-bar">
+    <div class="header">
       <img class="logo" src="@/assets/idea.png">
       <h1>{{ title }}</h1>
+      <input
+        type="image"
+        class="plus"
+        src="@/assets/plus.png"
+        @click="addNewBubble"
+      >
     </div>
     <div v-if="bubblesArray">
       <Bubble
-        v-for="(item, index) in bubblesArray"
-        :title="item.title"
+        v-for="(bubble, index) in bubblesArray"
         :key="index"
         :index="index"
-        @left="moveItemLeft"
-        @right="moveItemRight"
+        :text="bubble.text"
+        ref="bubbleChild"
+        @left="sendLeftCol"
+        @right="sendRightCol"
         @finished="finishFunction"
-        v-on:remove="bubblesArray.splice(index, 1)"
+        @delete="bubblesArray.splice(index, 1)"
       />
     </div>
-    <form v-on:submit.prevent="addNewItem">
-      <label>add task: 
-        <input
-          v-model="newItemText"
-          placeholder="Copying porn links"
-        >
-      </label>
-      <button>submit</button>
-    </form>
   </div>
 </template>
 
 
 <script>
-  import Bubble from './Bubble.vue'
+  import Bubble from '@/components/Bubble.vue'
 
   export default {
     name: 'Column',
     props: {
-      id: Number,
       title: String,
+      index: Number,
       bubblesArray: Array
-    },
-    data: function () {
-      return {
-        newItemText: ''
-      }
     },
     components: {
       Bubble
     },
     methods: {
-      addNewItem () {
-        this.bubblesArray.push({
-          title: this.newItemText
+      addNewBubble () {
+        this.bubblesArray.unshift({
+          text: ""
         })
-        this.newItemText = ''
+        this.$nextTick(() => {
+          this.$refs.bubbleChild[0].sendEdit()
+          // debugger;
+        })
       },
-      moveItemLeft (index) {
-        if (this.title !== 'TODO') {
-          this.$emit('left', this.title, index)          
+      sendLeftCol (bubbleIndex) {
+        if (this.index > 0) {
+          this.$emit('left', this.index, bubbleIndex)          
         }
       },
-      moveItemRight (index) {
-        if (this.title !== "MISC") {
-          this.$emit('right', this.title, index)
+      sendRightCol (bubbleIndex) {
+        if (this.index < 4) {
+          this.$emit('right', this.index, bubbleIndex)
         }
       },
-      finishFunction(index, title) {
-        this.bubblesArray[index].title = title
-      }
-    },
-    computed: {
-      input () {
-        return this.title + "new-item"
+      finishFunction(index, text) {
+        this.bubblesArray[index].text = text
       }
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
   .column{
     display: flex;
@@ -88,20 +79,27 @@
     margin: 0 16px;
   }
 
-  .logo {
-    height: 32px;
-    width: 32px;
-  }
-
-  .title-bar {
+  .header {
     display: flex;
     flex-direction: row;
     padding-top: 8px;
     padding-left: 16px;
   }
 
-  img {
-    padding: 8px;
+  .logo {
+    height: 32px;
+    width: 32px;
+  }
+
+  .plus {
+    height: 24px;
+    width: 24px;
+  }
+
+  #newBubble {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
   }
 
   h1 {
@@ -112,13 +110,21 @@
     font-weight: 900;    
   }
 
-  form {
-    display: flex;
-    flex-direction: row;
-    margin: 27px;
+  img {
+    padding: 8px;
   }
 
   label {
-    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  input {
+    height: 32px;
+  }
+
+  button {
+    margin-left: auto;
+    justify-content: flex-end;
   }
 </style>
