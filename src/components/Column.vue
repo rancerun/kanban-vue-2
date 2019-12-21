@@ -2,13 +2,19 @@
   <div class="column">
     <div class="header">
       <img class="logo" src="@/assets/idea.png">
-      <h1>{{ title }}</h1>
-      <input
-        type="image"
-        class="plus"
-        src="@/assets/plus.png"
-        @click="addNewBubble"
-      >
+      <h1
+        class="column-title"
+      >{{ title }}</h1>
+      <div id="add-button">
+        <button 
+          class="plus"
+          @click="addNewBubble"
+        >
+        <img 
+          class="plus"
+          src="@/assets/plus.png">
+        </button>
+      </div>
     </div>
     <div v-if="bubblesArray.length > 0">
       <Bubble
@@ -21,6 +27,11 @@
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
+    </div>
+    <div >
+      <h1
+        class="bubble-count"
+      >{{ this.bubblesArray.length }}</h1>
     </div>
   </div>
 </template>
@@ -75,13 +86,21 @@
   .header {
     display: flex;
     flex-direction: row;
-    padding-top: 8px;
-    padding-left: 16px;
   }
 
   .logo {
     height: 32px;
     width: 32px;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    margin-right: 0px;
+  }
+
+  .column-title {
+    text-align: left;
+    margin-top: 28px;
+    margin-left: 4px;
   }
 
   .plus {
@@ -89,35 +108,33 @@
     width: 24px;
   }
 
-  #newBubble {
-    display: flex;
-    flex-direction: row;
-    margin: 0px;
+  #add-button {
+    margin-left: auto;
+    margin-right: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    justify-content: flex-end;
+  }
+
+  .bubble-count {
+    text-align: right;
+    margin-top: 12px;
+    margin-right: 20px;
   }
 
   h1 {
-    text-align: left;
-    padding-top: 4px;
     color: #828491;
     font-size: 16px;
     font-weight: 900;    
   }
 
   img {
-    padding: 8px;
-  }
-
-  label {
-    font-size: 12px;
-    font-weight: 900;
-  }
-
-  input {
-    height: 32px;
+    padding: 4px;
   }
 
   button {
-    margin-left: auto;
-    justify-content: flex-end;
+    background-color: transparent;
+    border: none;
+    padding: 0;
   }
 </style>
