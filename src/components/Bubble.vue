@@ -1,19 +1,26 @@
 <template>
-  <div class="bubble">
+  <div
+    class="bubble"
+    tabindex="-1"
+    @keyup.arrow-left="sendLeftBub"
+    @keyup.arrow-right="sendRightBub"
+  >
     <img src="@/assets/list-icon.png">
     <div id="text-button-parent">
-      <h1
-        v-if="hideInput"
-        @click="sendEdit"
-      >
-        {{ text }}
-      </h1>
-      <input
-        v-else
-        ref="input"
-        v-model="currentText"
-        @blur="sendEdit"
-      >
+      <div class="bubble-text">
+        <h1
+          v-if="hideInput"
+          @click="sendEdit"
+        >
+          {{ text }}
+        </h1>
+        <input
+          v-else
+          ref="input"
+          v-model="currentText"
+          @blur="sendEdit"
+        >
+      </div>
       <div id="button-container">
         <button
           @click="sendLeftBub"
@@ -22,6 +29,7 @@
         </button>
         <button
           @click="sendRightBub"
+
         >
           &gt;
         </button>
@@ -53,13 +61,18 @@
       if (this.text.length === 0) {
         this.sendEdit();
       }
+      this.$el.focus();
     },
     methods: {
       sendLeftBub () {
-        this.$emit('left', this.index);
+        if (event.srcElement.tagName !== 'INPUT') {
+          this.$emit('left', this.index);
+        }
       },
       sendRightBub () {
-        this.$emit('right', this.index);
+        if (event.srcElement.tagName !== 'INPUT') {
+         this.$emit('right', this.index);
+        }
       },
       sendEdit() {
         if (this.hideInput) {
@@ -84,31 +97,39 @@
   .bubble {
     display: flex;
     flex-direction: row;
-    border-radius: 8px;
     background-color: white;
+    height: 100px;
+    border-radius: 8px;
     margin: 8px;
-    padding: 16px;
     color: black;
+  }
+
+  #text-button-parent {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
   }
 
   #button-container {
     display: flex;
     flex-direction: row;
-  }
-
-  #text-button-parent {
+    margin-top: 8px;
     margin-left: 8px;
   }
+
 
   h1 {
     text-align: left;
     font-size: 16px;
-    margin-left: 4px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 8px;
   }
 
   input {
     height: 24px;
-    margin-top: 4px;
+    margin-top: 16px;
+    margin-bottom: 16px;
     padding: 0;
     border: 0;
   }
@@ -116,12 +137,15 @@
   button {
     color: black;
     width: 48px;
-    margin: 4px;
   }
 
   img {
     height: 48px;
     width: 48px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    margin-right: 0;
     border-radius: 50px;
   }
 </style>

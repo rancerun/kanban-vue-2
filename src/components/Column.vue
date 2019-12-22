@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <div v-if="bubblesArray.length > 0">
+    <div class="bubble-container" v-if="bubblesArray.length > 0">
       <Bubble
         v-for="(bubble, index) in bubblesArray"
         :key="JSON.stringify(bubble)"
@@ -28,7 +28,9 @@
         @delete="bubblesArray.splice(index, 1)"
       />
     </div>
-    <div >
+    <div
+      class="bubble-count-container"
+    >
       <h1
         class="bubble-count"
       >{{ this.bubblesArray.length }}</h1>
@@ -76,10 +78,10 @@
   .column{
     display: flex;
     flex-direction: column;
-    border-radius: 16px;
-    min-height: 80vh;
-    min-width: 20%;
     background-color: #F5F6FD;
+    border-radius: 16px;
+    min-height: 85vh;
+    width: 25vw;
     margin: 0 16px;
   }
 
@@ -92,8 +94,8 @@
     height: 32px;
     width: 32px;
     margin-top: 16px;
-    margin-left: 16px;
     margin-bottom: 16px;
+    margin-left: 16px;
     margin-right: 0px;
   }
 
@@ -109,17 +111,20 @@
   }
 
   #add-button {
-    margin-left: auto;
-    margin-right: 16px;
     margin-top: 16px;
     margin-bottom: 16px;
-    justify-content: flex-end;
+    margin-left: auto;
+    margin-right: 16px;
+  }
+
+  .bubble-count-container {
+    margin-top: auto;
+    margin-bottom: 12px;
+    margin-right: 20px;
   }
 
   .bubble-count {
     text-align: right;
-    margin-top: 12px;
-    margin-right: 20px;
   }
 
   h1 {
