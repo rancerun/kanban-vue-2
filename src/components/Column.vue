@@ -2,9 +2,7 @@
   <div class="column">
     <div class="header">
       <img class="logo" src="@/assets/idea.png">
-      <h1
-        class="column-title"
-      >{{ title }}</h1>
+      <h1 class="column-title">{{ title }}</h1>
       <div id="add-button">
         <button 
           class="plus"
@@ -19,21 +17,20 @@
     <div class="bubble-container" v-if="bubblesArray.length > 0">
       <Bubble
         v-for="(bubble, index) in bubblesArray"
-        :key="JSON.stringify(bubble)"
+        :key="calculateId(bubble)"
         :index="index"
         :text="bubble.text"
+        :imgSrc="calcStockNum(bubble)"
+        @up="sendUpCol"
+        @down="sendDownCol"
         @left="sendLeftCol"
         @right="sendRightCol"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
     </div>
-    <div
-      class="bubble-count-container"
-    >
-      <h1
-        class="bubble-count"
-      >{{ this.bubblesArray.length }}</h1>
+    <div class="bubble-count-container">
+      <h1 class="bubble-count">{{ this.bubblesArray.length }}</h1>
     </div>
   </div>
 </template>
@@ -53,8 +50,23 @@
       Bubble
     },
     methods: {
+      calculateId(bubble) {
+        return bubble.__ob__.dep.id;
+      },
       addNewBubble (event, text = "") {
         this.bubblesArray.unshift({ text });
+      },
+      sendUpCol (bubbleIndex) {
+        if (bubbleIndex > 0) {
+          const bubble = this.bubblesArray.splice(bubbleIndex, 1)[0];
+          this.bubblesArray.splice((bubbleIndex - 1), 0, bubble);
+        }
+      },
+      sendDownCol (bubbleIndex) {
+        if (bubbleIndex < this.bubblesArray.length - 1) {
+          const bubble = this.bubblesArray.splice(bubbleIndex, 1)[0];
+          this.bubblesArray.splice((bubbleIndex + 1), 0, bubble);
+        }
       },
       sendLeftCol (bubbleIndex) {
         if (this.index > 0) {
@@ -68,7 +80,44 @@
       },
       finishFunction(index, newText) {
         this.bubblesArray[index].text = newText;
+      },
+      calcStockNum(bubble) {
+        const reducer = (acc, val) => acc + parseInt(val);
+        let arr = bubble.__ob__.dep.id.toString();
+        let bubId;
+
+        while (arr.length > 1) {
+          arr = arr.split('');
+          bubId = arr.reduce(reducer, 0);
+          arr = bubId.toString();
+        }
+
+        return require(`@/assets/list-icons/${bubId}.png`)
       }
+      // randStock() {
+      //   function weightedRandom(spread) {
+      //     let sum = 0;
+      //     const ranNum = Math.random();
+
+      //     for (let i in spread) {
+      //       sum += spread[i];
+      //       if (ranNum <= sum) return i;
+      //     }
+      //   }
+
+      //   const distribution = {
+      //     1: .16,
+      //     2: .04,
+      //     3: .16,
+      //     4: .16,
+      //     5: .16,
+      //     6: .16,
+      //     7: .16,
+      //   };
+
+      //   const rng = weightedRandom(distribution);
+      //   return require(`@/assets/list-icons/${rng}.png`)
+      // }
     }
   }
 </script>
@@ -80,7 +129,7 @@
     flex-direction: column;
     background-color: #F5F6FD;
     border-radius: 16px;
-    min-height: 85vh;
+    min-height: 88vh;
     width: 25vw;
     margin: 0 16px;
   }
