@@ -4,10 +4,10 @@
     tabindex="-1"
   >
     <img 
-      :src="imgSrc"
+      :src="imgsrc"
     >
-    <div id="text-button-container">
-      <div id="text-input">
+    <div class="text-button-container">
+      <div class="text-input">
         <h1
           v-if="hideInput"
           @click="sendEdit"
@@ -22,7 +22,7 @@
           maxlength="40"
         >
       </div>
-      <div id="button-charcount">
+      <div class="button-charcount">
         <button
           @click="deleteMe"
         >
@@ -41,9 +41,9 @@
     props: {
       text: String,
       index: Number,
-      imgSrc: String
+      imgsrc: String
     },
-    data () {
+    data() {
       return {
         currentText: this.text,
         hideInput: true
@@ -109,7 +109,7 @@
     outline: none;
   }
 
-  #text-button-container {
+  .text-button-container {
     display: flex;
     flex-direction: column;
     width: 230px;
@@ -117,11 +117,11 @@
     overflow-wrap: break-word;
   }
 
-  #text-input {
+  .text-input {
     height: 54px;
   }
 
-  #button-charcount {
+  .button-charcount {
     display: flex;
     flex-direction: row;
     width: 220px;

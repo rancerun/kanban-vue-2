@@ -1,9 +1,12 @@
 <template>
   <div class="column">
     <div class="header">
-      <img class="logo" src="@/assets/idea.png">
+      <img
+        class="logo"
+        src="@/assets/idea.png"
+      >
       <h1 class="column-title">{{ title }}</h1>
-      <div id="add-button">
+      <div class="add-button">
         <button 
           class="plus"
           @click="addNewBubble"
@@ -15,18 +18,18 @@
       </div>
     </div>
     <draggable
-      id="drag-div"
+      class="drag-div"
+      ghost-class="ghost"
+      animation="150"
       :list="bubblesArray"
       :group="{ name: 'people' }"
-      ghost-class="ghost"
-      animation=150
     >
       <Bubble
         v-for="(bubble, index) in bubblesArray"
         :key="calculateId(bubble)"
         :index="index"
         :text="bubble.text"
-        :imgSrc="calcStockNum(bubble)"
+        :imgsrc="calcStockNum(bubble)"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
@@ -57,7 +60,7 @@
       calculateId(bubble) {
         return bubble.__ob__.dep.id;
       },
-      addNewBubble (event, text = "") {
+      addNewBubble(event, text = '') {
         this.bubblesArray.unshift({ text });
       },
       finishFunction(index, newText) {
@@ -74,7 +77,7 @@
           arr = bubId.toString();
         }
 
-        return require(`@/assets/list-icons/${bubId}.png`)
+        return require(`@/assets/list-icons/${bubId}.png`);
       }
     }
   }
@@ -106,7 +109,7 @@
     margin-right: 0px;
   }
 
-  #drag-div {
+  .drag-div {
     height: 100%;
   }
 
@@ -121,7 +124,7 @@
     width: 24px;
   }
 
-  #add-button {
+  .add-button {
     margin-top: 16px;
     margin-bottom: 16px;
     margin-left: auto;

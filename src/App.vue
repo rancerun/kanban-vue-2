@@ -19,7 +19,7 @@ export default {
   components: {
     Column
   },
-  data () {
+  data() {
     return {
       kanban: [
         {
@@ -41,7 +41,7 @@ export default {
       ]
     }
   },
-  mounted () {
+  mounted() {
     if (localStorage.kanban) {
       this.kanban = JSON.parse(localStorage.kanban);
     }
