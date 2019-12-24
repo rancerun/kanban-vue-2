@@ -14,21 +14,23 @@
         </button>
       </div>
     </div>
-    <div class="bubble-container" v-if="bubblesArray.length > 0">
+    <draggable
+      id="drag-div"
+      :list="bubblesArray"
+      :group="{ name: 'people' }"
+      ghost-class="ghost"
+      animation=150
+    >
       <Bubble
         v-for="(bubble, index) in bubblesArray"
         :key="calculateId(bubble)"
         :index="index"
         :text="bubble.text"
         :imgSrc="calcStockNum(bubble)"
-        @up="sendUpCol"
-        @down="sendDownCol"
-        @left="sendLeftCol"
-        @right="sendRightCol"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
-    </div>
+    </draggable>
     <div class="bubble-count-container">
       <h1 class="bubble-count">{{ this.bubblesArray.length }}</h1>
     </div>
@@ -37,7 +39,8 @@
 
 
 <script>
-  import Bubble from '@/components/Bubble.vue'
+  import Bubble from '@/components/Bubble.vue';
+  import draggable from 'vuedraggable';
 
   export default {
     name: 'Column',
@@ -47,7 +50,8 @@
       bubblesArray: Array
     },
     components: {
-      Bubble
+      Bubble,
+      draggable
     },
     methods: {
       calculateId(bubble) {
@@ -55,28 +59,6 @@
       },
       addNewBubble (event, text = "") {
         this.bubblesArray.unshift({ text });
-      },
-      sendUpCol (bubbleIndex) {
-        if (bubbleIndex > 0) {
-          const bubble = this.bubblesArray.splice(bubbleIndex, 1)[0];
-          this.bubblesArray.splice((bubbleIndex - 1), 0, bubble);
-        }
-      },
-      sendDownCol (bubbleIndex) {
-        if (bubbleIndex < this.bubblesArray.length - 1) {
-          const bubble = this.bubblesArray.splice(bubbleIndex, 1)[0];
-          this.bubblesArray.splice((bubbleIndex + 1), 0, bubble);
-        }
-      },
-      sendLeftCol (bubbleIndex) {
-        if (this.index > 0) {
-          this.$emit('left', this.index, bubbleIndex);
-        }
-      },
-      sendRightCol (bubbleIndex) {
-        if (this.index < 3) {
-          this.$emit('right', this.index, bubbleIndex);
-        }
       },
       finishFunction(index, newText) {
         this.bubblesArray[index].text = newText;
@@ -94,30 +76,6 @@
 
         return require(`@/assets/list-icons/${bubId}.png`)
       }
-      // randStock() {
-      //   function weightedRandom(spread) {
-      //     let sum = 0;
-      //     const ranNum = Math.random();
-
-      //     for (let i in spread) {
-      //       sum += spread[i];
-      //       if (ranNum <= sum) return i;
-      //     }
-      //   }
-
-      //   const distribution = {
-      //     1: .16,
-      //     2: .04,
-      //     3: .16,
-      //     4: .16,
-      //     5: .16,
-      //     6: .16,
-      //     7: .16,
-      //   };
-
-      //   const rng = weightedRandom(distribution);
-      //   return require(`@/assets/list-icons/${rng}.png`)
-      // }
     }
   }
 </script>
@@ -148,6 +106,10 @@
     margin-right: 0px;
   }
 
+  #drag-div {
+    height: 100%;
+  }
+
   .column-title {
     text-align: left;
     margin-top: 28px;
@@ -174,6 +136,10 @@
 
   .bubble-count {
     text-align: right;
+  }
+
+  .ghost {
+    opacity: 0.5;
   }
 
   h1 {

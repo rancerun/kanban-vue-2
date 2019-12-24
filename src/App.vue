@@ -6,15 +6,13 @@
       :index="index"
       :title="topic.title"
       :bubblesArray="topic.bubblesArray"
-      @left="moveLeft"
-      @right="moveRight"
     />
   </div>
 </template>
 
 
 <script>
-import Column from '@/components/Column.vue'
+import Column from '@/components/Column.vue';
 
 export default {
   name: 'app',
@@ -54,20 +52,6 @@ export default {
         localStorage.setItem('kanban', JSON.stringify(newKanban));
       },
       deep: true
-    }
-  },
-  methods: {
-    moveLeft (columnIndex, itemIndex) {
-      const curColumnBubArr = this.kanban[columnIndex].bubblesArray;
-      const curBubble = curColumnBubArr[itemIndex];
-      curColumnBubArr.splice(itemIndex, 1);
-      this.kanban[columnIndex - 1].bubblesArray.push(curBubble);
-    },
-    moveRight (columnIndex, itemIndex) {
-      const curColumnBubArr = this.kanban[columnIndex].bubblesArray;
-      const curBubble = curColumnBubArr[itemIndex];
-      curColumnBubArr.splice(itemIndex, 1);
-      this.kanban[columnIndex + 1].bubblesArray.push(curBubble);
     }
   }
 }

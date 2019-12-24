@@ -2,10 +2,6 @@
   <div
     class="bubble"
     tabindex="-1"
-    @keyup.arrow-up="sendBubDirection('up')"
-    @keyup.arrow-down="sendBubDirection('down')"
-    @keyup.arrow-left="sendBubDirection('left')"
-    @keyup.arrow-right="sendBubDirection('right')"
   >
     <img 
       :src="imgSrc"
@@ -62,20 +58,9 @@
       if (this.text.length === 0) {
         this.sendEdit();
       }
-      // focus for left right shifting
       this.$el.focus();
     },
     methods: {
-      sendBubDirection(direction) {
-        if (event.srcElement.tagName !== 'INPUT') {
-          this.$emit(direction, this.index);
-
-          // focus for up down shifting. up doesn't require nextTick, but down does
-          this.$nextTick(() => {
-            this.$el.focus();
-          });
-        }
-      },
       sendEdit() {
         if (this.hideInput) {
           this.hideInput = !this.hideInput;
@@ -102,7 +87,10 @@
     color: black;
     height: 100px;
     margin: 8px;
-    border-width: 2px;
+    border-top-width: .5px;
+    border-left-width: .5px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
     border-style: solid;
     border-color: transparent;
     border-radius: 8px;
