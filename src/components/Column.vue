@@ -24,12 +24,13 @@
       :list="bubblesArray"
       :group="{ name: 'people' }"
     >
-      <Bubble
+      <bubble
         v-for="(bubble, index) in bubblesArray"
-        :key="calculateId(bubble)"
+        refs="bubble"
+        :key="calcIndex(index)"
         :index="index"
         :text="bubble.text"
-        :imgsrc="calcStockNum(bubble)"
+        :imgkey="require(`@/assets/list-icons/${index}.png`)"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
@@ -42,42 +43,29 @@
 
 
 <script>
-  import Bubble from '@/components/Bubble.vue';
+  import bubble from '@/components/Bubble.vue';
   import draggable from 'vuedraggable';
 
   export default {
-    name: 'Column',
+    name: 'column',
     props: {
       title: String,
       index: Number,
       bubblesArray: Array
     },
     components: {
-      Bubble,
+      bubble,
       draggable
     },
     methods: {
-      calculateId(bubble) {
-        return bubble.__ob__.dep.id;
-      },
       addNewBubble(event, text = '') {
         this.bubblesArray.unshift({ text });
       },
       finishFunction(index, newText) {
         this.bubblesArray[index].text = newText;
       },
-      calcStockNum(bubble) {
-        const reducer = (acc, val) => acc + parseInt(val);
-        let arr = bubble.__ob__.dep.id.toString();
-        let bubId;
-
-        while (arr.length > 1) {
-          arr = arr.split('');
-          bubId = arr.reduce(reducer, 0);
-          arr = bubId.toString();
-        }
-
-        return require(`@/assets/list-icons/${bubId}.png`);
+      calcIndex(index) {
+        return this.$refs.bubble ? JSON.parse(this.$refs.bubble[index]) : index;
       }
     }
   }

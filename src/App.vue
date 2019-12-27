@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Column
+    <column
       v-for="(topic, index) in kanban"
       :key="index"
       :index="index"
@@ -12,49 +12,49 @@
 
 
 <script>
-import Column from '@/components/Column.vue';
+  import column from '@/components/Column.vue';
 
-export default {
-  name: 'app',
-  components: {
-    Column
-  },
-  data() {
-    return {
-      kanban: [
-        {
-          title: 'TODO',
-          bubblesArray: []
+  export default {
+    name: 'app',
+    components: {
+      column
+    },
+    data() {
+      return {
+        kanban: [
+          {
+            title: 'TODO',
+            bubblesArray: []
+          },
+          {
+            title: 'IN-PROGRESS',
+            bubblesArray: []
+          },
+          {
+            title: 'COMPLETED',
+            bubblesArray: []
+          },
+          {
+            title: 'MISC',
+            bubblesArray: []
+          }
+        ] 
+      }
+    },
+    mounted() {
+      if (localStorage.getItem('kanban')) {
+        this.kanban = JSON.parse(localStorage.getItem('kanban'));
+      }
+    },
+    watch: {
+      kanban: {
+        handler(newKanban) {
+          localStorage.setItem('kanban', JSON.stringify(newKanban));
         },
-        {
-          title: 'IN-PROGRESS',
-          bubblesArray: []
-        },
-        {
-          title: 'COMPLETED',
-          bubblesArray: []
-        },
-        {
-          title: 'MISC',
-          bubblesArray: []
-        }
-      ]
-    }
-  },
-  mounted() {
-    if (localStorage.kanban) {
-      this.kanban = JSON.parse(localStorage.kanban);
-    }
-  },
-  watch: {
-    kanban: {
-      handler(newKanban) {
-        localStorage.setItem('kanban', JSON.stringify(newKanban));
-      },
-      deep: true
+        deep: true
+      }
     }
   }
-}
 </script>
 
 

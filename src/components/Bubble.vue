@@ -4,7 +4,7 @@
     tabindex="-1"
   >
     <img 
-      :src="imgsrc"
+      :src="imgkey"
     >
     <div class="text-button-container">
       <div class="text-input">
@@ -37,11 +37,11 @@
 
 <script>
   export default {
-    names: 'Bubble',
+    names: 'bubble',
     props: {
       text: String,
       index: Number,
-      imgsrc: String
+      imgkey: String
     },
     data() {
       return {
@@ -51,22 +51,17 @@
     },
     computed: {
       characterCount() {
-        return this.currentText.length;
+        return this.currentText ? this.currentText.length : 0;
       }
     },
     mounted() {
-      if (this.text.length === 0) {
-        this.sendEdit();
-      }
       this.$el.focus();
     },
     methods: {
       sendEdit() {
         if (this.hideInput) {
           this.hideInput = !this.hideInput;
-          this.$nextTick(() => {
-            this.$refs.input.focus();
-          });
+          this.$nextTick(() => this.$refs.input.focus());
         } else {
           this.$emit('finished', this.index, this.currentText);
           this.hideInput = !this.hideInput;
@@ -75,7 +70,7 @@
       deleteMe() {
         this.$emit('delete');
       }
-    } 
+    }
   }
 </script>
 
