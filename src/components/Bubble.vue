@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  names: 'bubble',
+  names: 'Bubble',
   props: {
     text: {
       type: String,
