@@ -3,7 +3,7 @@
     class="bubble"
     tabindex="-1"
   >
-    <img 
+    <img
       :src="imgkey"
     >
     <div class="text-button-container">
@@ -18,8 +18,8 @@
           v-else
           ref="input"
           v-model="currentText"
-          @blur="sendEdit"
           maxlength="40"
+          @blur="sendEdit"
         >
       </div>
       <div class="button-charcount">
@@ -36,42 +36,54 @@
 
 
 <script>
-  export default {
-    names: 'bubble',
-    props: {
-      text: String,
-      index: Number,
-      imgkey: String
+export default {
+  names: 'bubble',
+  props: {
+    text: {
+      type: String,
+      required: true
     },
-    data() {
-      return {
-        currentText: this.text,
-        hideInput: true
+    index: {
+      type: Number,
+      required: true
+    },
+    imgkey: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      currentText: this.text,
+      hideInput: true
+    };
+  },
+  computed: {
+    characterCount() {
+      return this.currentText ? this.currentText.length : 0;
+    }
+  },
+  mounted() {
+    if (this.text.length === 0) {
+      this.sendEdit();
+    }
+    this.$el.focus();
+  },
+  methods: {
+    sendEdit() {
+      if (this.hideInput) {
+        this.hideInput = !this.hideInput;
+        this.$nextTick(() => this.$refs.input.focus());
+      } else {
+        this.hideInput = !this.hideInput;
+        this.$emit('finished', this.index, this.currentText);
       }
     },
-    computed: {
-      characterCount() {
-        return this.currentText ? this.currentText.length : 0;
-      }
-    },
-    mounted() {
-      this.$el.focus();
-    },
-    methods: {
-      sendEdit() {
-        if (this.hideInput) {
-          this.hideInput = !this.hideInput;
-          this.$nextTick(() => this.$refs.input.focus());
-        } else {
-          this.$emit('finished', this.index, this.currentText);
-          this.hideInput = !this.hideInput;
-        }
-      },
-      deleteMe() {
-        this.$emit('delete');
-      }
+    deleteMe() {
+      this.$emit('delete');
     }
   }
+};
 </script>
 
 
@@ -135,7 +147,7 @@
 
   p {
     font-size: 12px;
-    color: #91939F; 
+    color: #91939F;
     font-weight: 800;
     margin-top: 0;
     margin-bottom: 0;

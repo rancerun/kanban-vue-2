@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "core-js": "^3.4.3",
-    "lodash.uniqueid": "^4.0.1",
     "vue": "^2.6.10",
     "vuedraggable": "^2.23.2"
   },
@@ -19,19 +18,24 @@
     "@vue/cli-service": "^4.1.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es6": true,
+      "browser": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
+      "airbnb-base",
+      "plugin:vue/recommended"
     ],
-    "rules": {},
+    "rules": {
+      "comma-dangle": 0
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

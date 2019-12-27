@@ -5,15 +5,18 @@
         class="logo"
         src="@/assets/idea.png"
       >
-      <h1 class="column-title">{{ title }}</h1>
+      <h1 class="column-title">
+        {{ title }}
+      </h1>
       <div class="add-button">
-        <button 
+        <button
           class="plus"
           @click="addNewBubble"
         >
-        <img 
-          class="plus"
-          src="@/assets/plus.png">
+          <img
+            class="plus"
+            src="@/assets/plus.png"
+          >
         </button>
       </div>
     </div>
@@ -26,49 +29,58 @@
     >
       <bubble
         v-for="(bubble, index) in bubblesArray"
-        refs="bubble"
-        :key="calcIndex(index)"
+        :key="createNewIndex()"
         :index="index"
         :text="bubble.text"
-        :imgkey="require(`@/assets/list-icons/${index}.png`)"
+        :imgkey="require(`@/assets/list-icons/${this.$parent.bubbleCount % 10}.png`)"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
     </draggable>
     <div class="bubble-count-container">
-      <h1 class="bubble-count">{{ this.bubblesArray.length }}</h1>
+      <h1 class="bubble-count">
+        {{ bubblesArray.length }}
+      </h1>
     </div>
   </div>
 </template>
 
 
 <script>
-  import bubble from '@/components/Bubble.vue';
-  import draggable from 'vuedraggable';
+import draggable from 'vuedraggable';
+import bubble from '@/components/Bubble.vue';
 
-  export default {
-    name: 'column',
-    props: {
-      title: String,
-      index: Number,
-      bubblesArray: Array
+
+export default {
+  name: 'Column',
+  components: {
+    bubble,
+    draggable
+  },
+  props: {
+    title: {
+      type: String,
+      required: true
     },
-    components: {
-      bubble,
-      draggable
+    bubblesArray: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    addNewBubble(event, text = '') {
+      this.bubblesArray.unshift({ text });
     },
-    methods: {
-      addNewBubble(event, text = '') {
-        this.bubblesArray.unshift({ text });
-      },
-      finishFunction(index, newText) {
-        this.bubblesArray[index].text = newText;
-      },
-      calcIndex(index) {
-        return this.$refs.bubble ? JSON.parse(this.$refs.bubble[index]) : index;
-      }
+    finishFunction(index, newText) {
+      this.bubblesArray[index].text = newText;
+    },
+    createNewIndex() {
+      const index = this.$parent.bubbleCount;
+      this.$emit('indexBump');
+      return index;
     }
   }
+};
 </script>
 
 
@@ -136,7 +148,7 @@
   h1 {
     color: #828491;
     font-size: 16px;
-    font-weight: 900;    
+    font-weight: 900;
   }
 
   img {
