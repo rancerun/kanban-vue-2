@@ -55,17 +55,17 @@ export default {
   name: 'Column',
   components: {
     bubble,
-    draggable
+    draggable,
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     bubblesArray: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     addNewBubble(event, text = '') {
@@ -78,8 +78,8 @@ export default {
       const index = this.$parent.bubbleCount;
       this.$emit('indexBump');
       return index;
-    }
-  }
+    },
+  },
 };
 </script>
 
