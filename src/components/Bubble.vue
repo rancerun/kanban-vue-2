@@ -41,27 +41,27 @@ export default {
   props: {
     text: {
       type: String,
-      required: true
+      required: true,
     },
     index: {
       type: Number,
-      required: true
+      required: true,
     },
     imgkey: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       currentText: this.text,
-      hideInput: true
+      hideInput: true,
     };
   },
   computed: {
     characterCount() {
       return this.currentText ? this.currentText.length : 0;
-    }
+    },
   },
   mounted() {
     if (this.text.length === 0) {
@@ -81,8 +81,8 @@ export default {
     },
     deleteMe() {
       this.$emit('delete');
-    }
-  }
+    },
+  },
 };
 </script>
 
