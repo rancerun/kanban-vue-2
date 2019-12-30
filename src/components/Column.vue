@@ -29,10 +29,10 @@
     >
       <bubble
         v-for="(bubble, index) in bubblesArray"
-        :key="createNewIndex()"
+        :key="index"
         :index="index"
         :text="bubble.text"
-        :imgkey="require(`@/assets/list-icons/${this.$parent.bubbleCount % 10}.png`)"
+        :imgkey="require(`@/assets/list-icons/${index % 10}.png`)"
         @finished="finishFunction"
         @delete="bubblesArray.splice(index, 1)"
       />
@@ -55,17 +55,17 @@ export default {
   name: 'Column',
   components: {
     bubble,
-    draggable,
+    draggable
   },
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     bubblesArray: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     addNewBubble(event, text = '') {
@@ -78,8 +78,8 @@ export default {
       const index = this.$parent.bubbleCount;
       this.$emit('indexBump');
       return index;
-    },
-  },
+    }
+  }
 };
 </script>
 

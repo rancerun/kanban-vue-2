@@ -1,5 +1,5 @@
 module.exports = {
-  lintOnSave: 'warning',
+  lintOnSave: 'warning'
   // devServer: {
   //   overlay: {
   //     warnings: true,

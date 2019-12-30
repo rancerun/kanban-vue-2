@@ -17,29 +17,29 @@ import column from '@/components/Column.vue';
 export default {
   name: 'App',
   components: {
-    column,
+    column
   },
   data() {
     return {
       kanban: [
         {
           title: 'TODO',
-          bubblesArray: [],
+          bubblesArray: []
         },
         {
           title: 'IN-PROGRESS',
-          bubblesArray: [],
+          bubblesArray: []
         },
         {
           title: 'COMPLETED',
-          bubblesArray: [],
+          bubblesArray: []
         },
         {
           title: 'MISC',
-          bubblesArray: [],
-        },
+          bubblesArray: []
+        }
       ],
-      bubbleCount: 0,
+      bubbleCount: 0
     };
   },
   watch: {
@@ -47,8 +47,8 @@ export default {
       handler(newKanban) {
         localStorage.setItem('kanban', JSON.stringify(newKanban));
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
     if (localStorage.getItem('kanban')) {
@@ -58,8 +58,8 @@ export default {
   methods: {
     indexTrack() {
       this.bubbleCount += 1;
-    },
-  },
+    }
+  }
 };
 </script>
 
