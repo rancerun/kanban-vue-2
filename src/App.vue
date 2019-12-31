@@ -19,29 +19,6 @@ export default {
   components: {
     column
   },
-  data() {
-    return {
-      kanban: [
-        {
-          title: 'TODO',
-          bubblesArray: []
-        },
-        {
-          title: 'IN-PROGRESS',
-          bubblesArray: []
-        },
-        {
-          title: 'COMPLETED',
-          bubblesArray: []
-        },
-        {
-          title: 'MISC',
-          bubblesArray: []
-        }
-      ],
-      bubbleCount: 0
-    };
-  },
   watch: {
     kanban: {
       handler(newKanban) {
@@ -50,14 +27,9 @@ export default {
       deep: true
     }
   },
-  mounted() {
-    if (localStorage.getItem('kanban')) {
-      this.kanban = JSON.parse(localStorage.getItem('kanban'));
-    }
-  },
-  methods: {
-    indexTrack() {
-      this.bubbleCount += 1;
+  computed: {
+    kanban() {
+      return this.$store.state.kanban;
     }
   }
 };

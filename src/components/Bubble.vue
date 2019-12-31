@@ -16,10 +16,13 @@
         </h1>
         <input
           v-else
+          autofocus
+          autocomplete="off"
           ref="input"
           v-model="currentText"
           maxlength="40"
           @blur="sendEdit"
+          @keyup.enter="sendEdit"
         >
       </div>
       <div class="button-charcount">
@@ -73,7 +76,6 @@ export default {
     sendEdit() {
       if (this.hideInput) {
         this.hideInput = !this.hideInput;
-        this.$nextTick(() => this.$refs.input.focus());
       } else {
         this.hideInput = !this.hideInput;
         this.$emit('finished', this.index, this.currentText);
