@@ -1,11 +1,8 @@
 <template>
   <div id="app">
     <column
-      v-for="(topic, index) in kanban"
-      :key="index"
+      v-for="topic in kanban"
       :title="topic.title"
-      :bubbles-array="topic.bubblesArray"
-      @indexBump="indexTrack"
     />
   </div>
 </template>

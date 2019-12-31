@@ -1,10 +1,7 @@
 <template>
   <div class="column">
     <div class="header">
-      <img
-        class="logo"
-        src="@/assets/idea.png"
-      >
+      <img class="logo" src="@/assets/idea.png">
       <h1 class="column-title">
         {{ title }}
       </h1>
@@ -13,10 +10,7 @@
           class="plus"
           @click="addNewBubble"
         >
-          <img
-            class="plus"
-            src="@/assets/plus.png"
-          >
+          <img class="plus" src="@/assets/plus.png">
         </button>
       </div>
     </div>
@@ -32,9 +26,6 @@
         :key="index"
         :index="index"
         :text="bubble.text"
-        :imgkey="require(`@/assets/list-icons/${index % 10}.png`)"
-        @finished="finishFunction"
-        @delete="bubblesArray.splice(index, 1)"
       />
     </draggable>
     <div class="bubble-count-container">
@@ -61,23 +52,19 @@ export default {
     title: {
       type: String,
       required: true
-    },
-    bubblesArray: {
-      type: Array,
-      required: true
     }
   },
   methods: {
-    addNewBubble(event, text = '') {
-      this.bubblesArray.unshift({ text });
-    },
-    finishFunction(index, newText) {
-      this.bubblesArray[index].text = newText;
-    },
-    createNewIndex() {
-      const index = this.$parent.bubbleCount;
-      this.$emit('indexBump');
-      return index;
+    addNewBubble() {
+      this.$store.commit('addBubble', this.title);
+    }
+    // finishFunction(index, newText) {
+    //   this.bubblesArray[index].text = newText;
+    // }
+  },
+  computed: {
+    bubblesArray() {
+      return this.$store.getters.getColBubArrayByTitle(this.title);
     }
   }
 };

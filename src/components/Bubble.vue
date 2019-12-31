@@ -1,10 +1,7 @@
 <template>
-  <div
-    class="bubble"
-    tabindex="-1"
-  >
+  <div class="bubble" tabindex="-1">
     <img
-      :src="imgkey"
+      :src="require(`@/assets/list-icons/${index % 10}.png`)"
     >
     <div class="text-button-container">
       <div class="text-input">
@@ -48,10 +45,6 @@ export default {
     },
     index: {
       type: Number,
-      required: true
-    },
-    imgkey: {
-      type: String,
       required: true
     }
   },

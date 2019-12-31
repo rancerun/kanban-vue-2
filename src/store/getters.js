@@ -1,6 +1,4 @@
+export const getColBubArrayByTitle = (state) => (title) => {
+  return state.kanban.find((column) => column.title === title).bubblesArray;
+};
 
-let id = 0;
-
-export const imgId = state => {
-  return `@/assets/list-icons/${state.column.bubble.id}.png`
-}
