@@ -23,10 +23,8 @@
         >
       </div>
       <div class="button-charcount">
-        <button
-          @click="deleteMe"
-        >
-          DELETE
+        <button @click="deleteMe">
+          Delete
         </button>
         <p>{{ characterCount }}/40</p>
       </div>

@@ -10,14 +10,13 @@
   </div>
 </template>
 
-
 <script>
-import column from '@/components/Column.vue';
+import Column from '@/components/Column.vue';
 
 export default {
   name: 'App',
   components: {
-    column
+    Column
   },
   data() {
     return {
@@ -50,9 +49,10 @@ export default {
       deep: true
     }
   },
-  mounted() {
-    if (localStorage.getItem('kanban')) {
-      this.kanban = JSON.parse(localStorage.getItem('kanban'));
+  created() {
+    const kanbanData = localStorage.getItem('kanban');
+    if (kanbanData) {
+      this.kanban = JSON.parse(kanbanData);
     }
   },
   methods: {
@@ -62,7 +62,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 #app {
