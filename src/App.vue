@@ -5,7 +5,6 @@
       :key="index"
       :title="topic.title"
       :bubbles-array="topic.bubblesArray"
-      @indexBump="indexTrack"
     />
   </div>
 </template>
@@ -37,8 +36,7 @@ export default {
           title: 'MISC',
           bubblesArray: []
         }
-      ],
-      bubbleCount: 0
+      ]
     };
   },
   watch: {
@@ -53,11 +51,6 @@ export default {
     const kanbanData = localStorage.getItem('kanban');
     if (kanbanData) {
       this.kanban = JSON.parse(kanbanData);
-    }
-  },
-  methods: {
-    indexTrack() {
-      this.bubbleCount += 1;
     }
   }
 };
