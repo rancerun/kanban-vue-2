@@ -3,18 +3,18 @@
     <column
       v-for="topic in kanban"
       :title="topic.title"
+      :bubbles-array="topic.bubblesArray"
     />
   </div>
 </template>
 
-
 <script>
-import column from '@/components/Column.vue';
+import Column from '@/components/Column.vue';
 
 export default {
   name: 'App',
   components: {
-    column
+    Column
   },
   watch: {
     kanban: {
@@ -31,7 +31,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 #app {

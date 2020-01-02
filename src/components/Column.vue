@@ -24,8 +24,8 @@
       <bubble
         v-for="(bubble, index) in bubblesArray"
         :key="index"
-        :index="index"
-        :text="bubble.text"
+        :data="bubble"
+        @delete="bubblesArray.splice(index, 1)"
       />
     </draggable>
     <div class="bubble-count-container">
@@ -36,17 +36,15 @@
   </div>
 </template>
 
-
 <script>
-import draggable from 'vuedraggable';
-import bubble from '@/components/Bubble.vue';
-
+import Draggable from 'vuedraggable';
+import Bubble from '@/components/Bubble.vue';
 
 export default {
   name: 'Column',
   components: {
-    bubble,
-    draggable
+    Bubble,
+    Draggable
   },
   props: {
     title: {
@@ -56,11 +54,14 @@ export default {
   },
   methods: {
     addNewBubble() {
-      this.$store.commit('addBubble', this.title);
+      const imgId = Math.floor(Math.random() * 10);
+      this.bubblesArray.push({
+        // eslint-disable-next-line
+        imgSrc: require(`@/assets/list-icons/${imgId}.png`),
+        text: '',
+        editing: true
+      });
     }
-    // finishFunction(index, newText) {
-    //   this.bubblesArray[index].text = newText;
-    // }
   },
   computed: {
     bubblesArray() {
@@ -70,81 +71,80 @@ export default {
 };
 </script>
 
-
 <style scoped>
-  .column{
-    display: flex;
-    flex-direction: column;
-    background-color: #F5F6FD;
-    border-radius: 16px;
-    min-height: 88vh;
-    width: 25vw;
-    margin: 0 16px;
-  }
+.column{
+  display: flex;
+  flex-direction: column;
+  background-color: #F5F6FD;
+  border-radius: 16px;
+  min-height: 88vh;
+  width: 25vw;
+  margin: 0 16px;
+}
 
-  .header {
-    display: flex;
-    flex-direction: row;
-  }
+.header {
+  display: flex;
+  flex-direction: row;
+}
 
-  .logo {
-    height: 32px;
-    width: 32px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: 16px;
-    margin-right: 0px;
-  }
+.logo {
+  height: 32px;
+  width: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 16px;
+  margin-right: 0px;
+}
 
-  .drag-div {
-    height: 100%;
-  }
+.drag-div {
+  height: 100%;
+}
 
-  .column-title {
-    text-align: left;
-    margin-top: 28px;
-    margin-left: 4px;
-  }
+.column-title {
+  text-align: left;
+  margin-top: 28px;
+  margin-left: 4px;
+}
 
-  .plus {
-    height: 24px;
-    width: 24px;
-  }
+.plus {
+  height: 24px;
+  width: 24px;
+}
 
-  .add-button {
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: auto;
-    margin-right: 16px;
-  }
+.add-button {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: 16px;
+}
 
-  .bubble-count-container {
-    margin-top: auto;
-    margin-bottom: 12px;
-    margin-right: 20px;
-  }
+.bubble-count-container {
+  margin-top: auto;
+  margin-bottom: 12px;
+  margin-right: 20px;
+}
 
-  .bubble-count {
-    text-align: right;
-  }
+.bubble-count {
+  text-align: right;
+}
 
-  .ghost {
-    opacity: 0.5;
-  }
+.ghost {
+  opacity: 0.5;
+}
 
-  h1 {
-    color: #828491;
-    font-size: 16px;
-    font-weight: 900;
-  }
+h1 {
+  color: #828491;
+  font-size: 16px;
+  font-weight: 900;
+}
 
-  img {
-    padding: 4px;
-  }
+img {
+  padding: 4px;
+}
 
-  button {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-  }
+button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
 </style>

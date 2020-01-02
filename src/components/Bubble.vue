@@ -1,200 +1,184 @@
 <template>
-  <div class="bubble" tabindex="-1">
-    <img
-      :src="require(`@/assets/list-icons/${index % 10}.png`)"
-    >
+  <div
+    class="bubble"
+    tabindex="-1"
+  >
+    <img :src="data.imgSrc">
     <div class="text-button-container">
       <div class="text-input">
-        <h1
-          v-if="hideInput"
-          @click="sendEdit"
-        >
-          {{ text }}
-        </h1>
         <input
-          v-else
-          autofocus
-          autocomplete="off"
+          v-if="data.editing"
           ref="input"
-          v-model="currentText"
+          v-model="data.text"
           maxlength="40"
-          @blur="sendEdit"
-          @keyup.enter="sendEdit"
+          @blur="toggleEdit"
+          @keyup.enter="$event.target.blur"
         >
+        <h1
+          v-else
+          @click="toggleEdit"
+        >
+          {{ data.text }}
+        </h1>
       </div>
       <div class="button-charcount">
-        <button
-          @click="deleteMe"
-        >
-          DELETE
+        <button @click="deleteBubble">
+          Delete
         </button>
-        <p>{{ characterCount }}/40</p>
+        <p>{{ charCount }}/40</p>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
 export default {
   names: 'Bubble',
   props: {
-    text: {
-      type: String,
-      required: true
-    },
-    index: {
-      type: Number,
+    data: {
+      type: Object,
       required: true
     }
-  },
-  data() {
-    return {
-      currentText: this.text,
-      hideInput: true
-    };
   },
   computed: {
-    characterCount() {
-      return this.currentText ? this.currentText.length : 0;
+    charCount() {
+      return this.data.text ? this.data.text.length : 0;
     }
   },
-  mounted() {
-    if (this.text.length === 0) {
-      this.sendEdit();
+  watch: {
+    'data.editing': {
+      immediate: true,
+      handler(editMode) {
+        if (editMode) {
+          this.$nextTick(() => this.$refs.input.focus());
+        }
+      }
     }
-    this.$el.focus();
   },
   methods: {
-    sendEdit() {
-      if (this.hideInput) {
-        this.hideInput = !this.hideInput;
-      } else {
-        this.hideInput = !this.hideInput;
-        this.$emit('finished', this.index, this.currentText);
-      }
+    toggleEdit() {
+      this.data.editing = !this.data.editing;
     },
-    deleteMe() {
+    deleteBubble() {
       this.$emit('delete');
     }
   }
 };
 </script>
 
-
 <style scoped>
-  .bubble {
-    display: flex;
-    flex-direction: row;
-    color: black;
-    height: 100px;
-    margin: 8px;
-    border-top-width: .5px;
-    border-left-width: .5px;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-style: solid;
-    border-color: transparent;
-    border-radius: 8px;
-    background-color: white;
-  }
+.bubble {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  height: 100px;
+  margin: 8px;
+  border-top-width: .5px;
+  border-left-width: .5px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 8px;
+  background-color: white;
+}
 
-  .bubble:focus-within {
-    border-top-width: .5px;
-    border-left-width: .5px;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-style: solid;
-    border-color: #91939F;
-    border-radius: 8px;
-    box-shadow: 3px 3px 3px #91939F;
-    outline: none;
-  }
+.bubble:focus-within {
+  border-top-width: .5px;
+  border-left-width: .5px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-style: solid;
+  border-color: #91939F;
+  border-radius: 8px;
+  box-shadow: 3px 3px 3px #91939F;
+  outline: none;
+}
 
-  .text-button-container {
-    display: flex;
-    flex-direction: column;
-    width: 230px;
-    margin-left: 8px;
-    overflow-wrap: break-word;
-  }
+.text-button-container {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  margin-left: 8px;
+  overflow-wrap: break-word;
+}
 
-  .text-input {
-    height: 54px;
-  }
+.text-input {
+  height: 54px;
+}
 
-  .button-charcount {
-    display: flex;
-    flex-direction: row;
-    width: 220px;
-    margin-top: 16px;
-  }
+.button-charcount {
+  display: flex;
+  flex-direction: row;
+  width: 220px;
+  margin-top: 16px;
+}
 
-  h1 {
-    text-align: left;
-    font-size: 16px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: 8px;
-    height: 100%;
-    overflow: hidden;
-  }
+h1 {
+  text-align: left;
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 8px;
+  height: 100%;
+  overflow: hidden;
+}
 
-  p {
-    font-size: 12px;
-    color: #91939F;
-    font-weight: 800;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: auto;
-  }
+p {
+  font-size: 12px;
+  color: #91939F;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+}
 
-  input {
-    display: flex;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: 8px;
-    border: none;
-    padding: 0;
-  }
+input {
+  display: flex;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 8px;
+  border: none;
+  padding: 0;
+}
 
-  input:focus {
-    outline: none;
-  }
+input:focus {
+  outline: none;
+}
 
-  button {
-    color: #91939F;
-    font-size: 12px;
-    font-weight: 700;
-    width: 64px;
-    margin-left: 8px;
-    padding: 0;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #91939F;
-    border-radius: 4px;
-    background-color: #F5F6FD;
-  }
+button {
+  color: #91939F;
+  font-size: 12px;
+  font-weight: 700;
+  width: 64px;
+  margin-left: 8px;
+  padding: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #91939F;
+  border-radius: 4px;
+  background-color: #F5F6FD;
+}
 
-  button:focus {
-    outline: none;
-  }
+button:focus {
+  outline: none;
+}
 
-  button:hover {
-    color: #F5F6FD;
-    background-color: #A5AFBD;
-  }
+button:hover {
+  color: #F5F6FD;
+  background-color: #A5AFBD;
+}
 
-  img {
-    height: 48px;
-    width: 48px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: 16px;
-    margin-right: 0;
-    border-radius: 50px;
-  }
+img {
+  height: 48px;
+  width: 48px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 16px;
+  margin-right: 0;
+  border-radius: 50px;
+}
 </style>
