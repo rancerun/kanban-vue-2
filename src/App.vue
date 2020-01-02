@@ -5,19 +5,17 @@
       :key="index"
       :title="topic.title"
       :bubbles-array="topic.bubblesArray"
-      @indexBump="indexTrack"
     />
   </div>
 </template>
 
-
 <script>
-import column from '@/components/Column.vue';
+import Column from '@/components/Column.vue';
 
 export default {
   name: 'App',
   components: {
-    column
+    Column
   },
   data() {
     return {
@@ -38,8 +36,7 @@ export default {
           title: 'MISC',
           bubblesArray: []
         }
-      ],
-      bubbleCount: 0
+      ]
     };
   },
   watch: {
@@ -50,19 +47,14 @@ export default {
       deep: true
     }
   },
-  mounted() {
-    if (localStorage.getItem('kanban')) {
-      this.kanban = JSON.parse(localStorage.getItem('kanban'));
-    }
-  },
-  methods: {
-    indexTrack() {
-      this.bubbleCount += 1;
+  created() {
+    const kanbanData = localStorage.getItem('kanban');
+    if (kanbanData) {
+      this.kanban = JSON.parse(kanbanData);
     }
   }
 };
 </script>
-
 
 <style>
 #app {
