@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bubble"
-    tabindex="-1"
-  >
+  <div class="bubble" tabindex="-1">
     <img :src="data.imgSrc">
     <div class="text-button-container">
       <div class="text-input">
@@ -47,12 +44,12 @@ export default {
   },
   watch: {
     'data.editing': {
-      immediate: true,
       handler(editMode) {
         if (editMode) {
           this.$nextTick(() => this.$refs.input.focus());
         }
-      }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -60,7 +57,7 @@ export default {
       this.data.editing = !this.data.editing;
     },
     deleteBubble() {
-      this.$emit('delete');
+      this.$emit('delete', this.index);
     }
   }
 };

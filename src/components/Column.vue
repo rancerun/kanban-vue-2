@@ -8,7 +8,7 @@
       <div class="add-button">
         <button
           class="plus"
-          @click="addNewBubble"
+          @click="addBubble(title)"
         >
           <img class="plus" src="@/assets/plus.png">
         </button>
@@ -25,7 +25,7 @@
         v-for="(bubble, index) in bubblesArray"
         :key="index"
         :data="bubble"
-        @delete="bubblesArray.splice(index, 1)"
+        @delete="deleteBubble(index)"
       />
     </draggable>
     <div class="bubble-count-container">
@@ -52,20 +52,20 @@ export default {
       required: true
     }
   },
-  methods: {
-    addNewBubble() {
-      const imgId = Math.floor(Math.random() * 10);
-      this.bubblesArray.push({
-        // eslint-disable-next-line
-        imgSrc: require(`@/assets/list-icons/${imgId}.png`),
-        text: '',
-        editing: true
-      });
-    }
-  },
   computed: {
     bubblesArray() {
-      return this.$store.getters.getColBubArrayByTitle(this.title);
+      return this.$store.getters.getColBubbleArrByTitle(this.title);
+    }
+  },
+  methods: {
+    addBubble() {
+      this.$store.commit('addBubble', this.title);
+    },
+    deleteBubble(bubIndex) {
+      this.$store.commit('deleteBubble', {
+        title: this.title,
+        index: bubIndex
+      });
     }
   }
 };
@@ -97,6 +97,7 @@ export default {
 }
 
 .drag-div {
+
   height: 100%;
 }
 

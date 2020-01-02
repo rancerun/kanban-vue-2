@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <column
-      v-for="topic in kanban"
+      v-for="(topic, index) in kanban"
+      :key="index"
       :title="topic.title"
-      :bubbles-array="topic.bubblesArray"
     />
   </div>
 </template>
@@ -16,17 +16,17 @@ export default {
   components: {
     Column
   },
+  computed: {
+    kanban() {
+      return this.$store.state.kanban;
+    }
+  },
   watch: {
     kanban: {
       handler(newKanban) {
         localStorage.setItem('kanban', JSON.stringify(newKanban));
       },
       deep: true
-    }
-  },
-  computed: {
-    kanban() {
-      return this.$store.state.kanban;
     }
   }
 };
