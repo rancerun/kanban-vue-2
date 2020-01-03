@@ -122,7 +122,7 @@ input {
   border-style: solid;
   border-width: 1px;
   margin-left: auto;
-  margin-right: 48px;
+  margin-right: 32px;
   padding: 10px;
   outline: none;
 }

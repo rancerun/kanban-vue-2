@@ -78,7 +78,7 @@ export default {
   border-radius: 16px;
   min-height: 600px;
   min-width: 336px;
-  margin: 0 16px;
+  margin: 0 4px;
 }
 
 .header {
