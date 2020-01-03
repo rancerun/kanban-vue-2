@@ -18,11 +18,11 @@
       class="drag-div"
       ghost-class="ghost"
       animation="150"
-      :list="bubblesArray"
+      :list="bubbleArr"
       :group="{ name: 'people' }"
     >
       <bubble
-        v-for="(bubble, index) in bubblesArray"
+        v-for="(bubble, index) in bubbleArr"
         :key="index"
         :data="bubble"
         @delete="deleteBubble(index)"
@@ -30,7 +30,7 @@
     </draggable>
     <div class="bubble-count-container">
       <h1 class="bubble-count">
-        {{ bubblesArray.length }}
+        {{ bubbleArr.length }}
       </h1>
     </div>
   </div>
@@ -50,11 +50,10 @@ export default {
     title: {
       type: String,
       required: true
-    }
-  },
-  computed: {
-    bubblesArray() {
-      return this.$store.getters.getColBubbleArrByTitle(this.title);
+    },
+    bubbleArr: {
+      type: Array,
+      required: true
     }
   },
   methods: {

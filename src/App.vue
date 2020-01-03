@@ -4,6 +4,7 @@
       v-for="(topic, index) in kanban"
       :key="index"
       :title="topic.title"
+      :bubble-arr="topic.bubblesArray"
     />
   </div>
 </template>
