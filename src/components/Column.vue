@@ -76,8 +76,8 @@ export default {
   flex-direction: column;
   background-color: #F5F6FD;
   border-radius: 16px;
-  min-height: 88vh;
-  width: 25vw;
+  min-height: 600px;
+  min-width: 336px;
   margin: 0 16px;
 }
 
@@ -96,7 +96,6 @@ export default {
 }
 
 .drag-div {
-
   height: 100%;
 }
 

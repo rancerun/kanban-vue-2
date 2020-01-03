@@ -19,10 +19,10 @@
         </h1>
       </div>
       <div class="button-charcount">
+        <p>{{ charCount }}/40</p>
         <button @click="deleteBubble">
           Delete
         </button>
-        <p>{{ charCount }}/40</p>
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@ export default {
 .text-button-container {
   display: flex;
   flex-direction: column;
-  width: 230px;
+  width: 240px;
   margin-left: 8px;
   overflow-wrap: break-word;
 }
@@ -117,6 +117,7 @@ h1 {
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: 8px;
+  margin-right: 8px;
   height: 100%;
   overflow: hidden;
 }
@@ -125,9 +126,10 @@ p {
   font-size: 12px;
   color: #91939F;
   font-weight: 800;
-  margin-top: 0;
+  margin-top: 0px;
   margin-bottom: 0;
-  margin-left: auto;
+  margin-left: 12px;
+  margin-right: auto;
 }
 
 input {
@@ -135,9 +137,10 @@ input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 600;
-  margin-top: 16px;
+  margin-top: 13px;
   margin-bottom: 16px;
   margin-left: 8px;
+  margin-right: 8px;
   border: none;
   padding: 0;
 }
