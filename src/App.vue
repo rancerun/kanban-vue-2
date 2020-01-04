@@ -10,7 +10,9 @@
             @blur="setToEmpty"
           >
         </span>
-        <div class="sub-text">Programmer</div>
+        <div class="sub-text">
+          Programmer
+        </div>
       </div>
       <hr class="hori-line">
       <div class="columns">
@@ -74,7 +76,6 @@ export default {
   width: 100%;
   margin-top: 32px;
   margin-bottom: 32px;
-
 }
 
 .header-text {
@@ -86,7 +87,6 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
 
 .name-text {
   font-size: 32px;
@@ -109,7 +109,7 @@ export default {
 }
 
 hr {
-  opacity: .2;
+  opacity: 0.2;
 }
 
 input {
@@ -117,7 +117,7 @@ input {
   width: 200px;
   font-size: 16px;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  border-color: #F0F2F5;
+  border-color: #f0f2f5;
   border-radius: 48px;
   border-style: solid;
   border-width: 1px;

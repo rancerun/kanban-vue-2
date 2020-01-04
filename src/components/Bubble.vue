@@ -70,8 +70,8 @@ export default {
   color: black;
   height: 100px;
   margin: 8px;
-  border-top-width: .5px;
-  border-left-width: .5px;
+  border-top-width: 0.5px;
+  border-left-width: 0.5px;
   border-right-width: 2px;
   border-bottom-width: 2px;
   border-style: solid;
@@ -81,14 +81,14 @@ export default {
 }
 
 .bubble:focus-within {
-  border-top-width: .5px;
-  border-left-width: .5px;
+  border-top-width: 0.5px;
+  border-left-width: 0.5px;
   border-right-width: 2px;
   border-bottom-width: 2px;
   border-style: solid;
-  border-color: #91939F;
+  border-color: #91939f;
   border-radius: 8px;
-  box-shadow: 3px 3px 3px #91939F;
+  box-shadow: 3px 3px 3px #91939f;
   outline: none;
 }
 
@@ -124,9 +124,9 @@ h1 {
 
 p {
   font-size: 12px;
-  color: #91939F;
+  color: #91939f;
   font-weight: 800;
-  margin-top: 0px;
+  margin-top: 0;
   margin-bottom: 0;
   margin-left: 12px;
   margin-right: auto;
@@ -150,7 +150,7 @@ input:focus {
 }
 
 button {
-  color: #91939F;
+  color: #91939f;
   font-size: 12px;
   font-weight: 700;
   width: 64px;
@@ -158,9 +158,9 @@ button {
   padding: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #91939F;
+  border-color: #91939f;
   border-radius: 4px;
-  background-color: #F5F6FD;
+  background-color: #f5f6fd;
 }
 
 button:focus {
@@ -168,8 +168,8 @@ button:focus {
 }
 
 button:hover {
-  color: #F5F6FD;
-  background-color: #A5AFBD;
+  color: #f5f6fd;
+  background-color: #a5afbd;
 }
 
 img {
