@@ -71,14 +71,14 @@ export default {
 </script>
 
 <style scoped>
-.column{
+.column {
   display: flex;
   flex-direction: column;
-  background-color: #F5F6FD;
+  background-color: #f5f6fd;
   border-radius: 16px;
-  min-height: 88vh;
-  width: 25vw;
-  margin: 0 16px;
+  min-height: 600px;
+  min-width: 336px;
+  margin: 0 4px;
 }
 
 .header {
@@ -92,11 +92,10 @@ export default {
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: 16px;
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .drag-div {
-
   height: 100%;
 }
 
