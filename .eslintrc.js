@@ -14,7 +14,7 @@ module.exports = {
     'no-console': isProd ? 'error' : 'off',
     'no-debugger': isProd ? 'error' : 'off',
     'vue/max-attributes-per-line': ['warn', {
-      'singleline': 2
+      singleline: 2
     }],
     'comma-dangle': ['error', 'never']
   },

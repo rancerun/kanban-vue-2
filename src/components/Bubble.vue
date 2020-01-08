@@ -19,10 +19,10 @@
         </h1>
       </div>
       <div class="button-charcount">
+        <p>{{ charCount }}/40</p>
         <button @click="deleteBubble">
           Delete
         </button>
-        <p>{{ charCount }}/40</p>
       </div>
     </div>
   </div>
@@ -70,8 +70,8 @@ export default {
   color: black;
   height: 100px;
   margin: 8px;
-  border-top-width: .5px;
-  border-left-width: .5px;
+  border-top-width: 0.5px;
+  border-left-width: 0.5px;
   border-right-width: 2px;
   border-bottom-width: 2px;
   border-style: solid;
@@ -81,21 +81,21 @@ export default {
 }
 
 .bubble:focus-within {
-  border-top-width: .5px;
-  border-left-width: .5px;
+  border-top-width: 0.5px;
+  border-left-width: 0.5px;
   border-right-width: 2px;
   border-bottom-width: 2px;
   border-style: solid;
-  border-color: #91939F;
+  border-color: #91939f;
   border-radius: 8px;
-  box-shadow: 3px 3px 3px #91939F;
+  box-shadow: 3px 3px 3px #91939f;
   outline: none;
 }
 
 .text-button-container {
   display: flex;
   flex-direction: column;
-  width: 230px;
+  width: 240px;
   margin-left: 8px;
   overflow-wrap: break-word;
 }
@@ -117,17 +117,19 @@ h1 {
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: 8px;
+  margin-right: 8px;
   height: 100%;
   overflow: hidden;
 }
 
 p {
   font-size: 12px;
-  color: #91939F;
+  color: #91939f;
   font-weight: 800;
   margin-top: 0;
   margin-bottom: 0;
-  margin-left: auto;
+  margin-left: 12px;
+  margin-right: auto;
 }
 
 input {
@@ -135,9 +137,10 @@ input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 600;
-  margin-top: 16px;
+  margin-top: 13px;
   margin-bottom: 16px;
   margin-left: 8px;
+  margin-right: 8px;
   border: none;
   padding: 0;
 }
@@ -147,7 +150,7 @@ input:focus {
 }
 
 button {
-  color: #91939F;
+  color: #91939f;
   font-size: 12px;
   font-weight: 700;
   width: 64px;
@@ -155,9 +158,9 @@ button {
   padding: 0;
   border-width: 1px;
   border-style: solid;
-  border-color: #91939F;
+  border-color: #91939f;
   border-radius: 4px;
-  background-color: #F5F6FD;
+  background-color: #f5f6fd;
 }
 
 button:focus {
@@ -165,8 +168,8 @@ button:focus {
 }
 
 button:hover {
-  color: #F5F6FD;
-  background-color: #A5AFBD;
+  color: #f5f6fd;
+  background-color: #a5afbd;
 }
 
 img {
