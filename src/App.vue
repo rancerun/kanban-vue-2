@@ -4,7 +4,7 @@
       v-for="(topic, index) in kanban"
       :key="index"
       :title="topic.title"
-      :bubbles-array="topic.bubblesArray"
+      :bubble-arr="topic.bubblesArray"
     />
   </div>
 </template>
@@ -17,27 +17,10 @@ export default {
   components: {
     Column
   },
-  data() {
-    return {
-      kanban: [
-        {
-          title: 'TODO',
-          bubblesArray: []
-        },
-        {
-          title: 'IN-PROGRESS',
-          bubblesArray: []
-        },
-        {
-          title: 'COMPLETED',
-          bubblesArray: []
-        },
-        {
-          title: 'MISC',
-          bubblesArray: []
-        }
-      ]
-    };
+  computed: {
+    kanban() {
+      return this.$store.state.kanban;
+    }
   },
   watch: {
     kanban: {
@@ -45,12 +28,6 @@ export default {
         localStorage.setItem('kanban', JSON.stringify(newKanban));
       },
       deep: true
-    }
-  },
-  created() {
-    const kanbanData = localStorage.getItem('kanban');
-    if (kanbanData) {
-      this.kanban = JSON.parse(kanbanData);
     }
   }
 };

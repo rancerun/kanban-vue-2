@@ -1,22 +1,16 @@
 <template>
   <div class="column">
     <div class="header">
-      <img
-        class="logo"
-        src="@/assets/idea.png"
-      >
+      <img class="logo" src="@/assets/idea.png">
       <h1 class="column-title">
         {{ title }}
       </h1>
       <div class="add-button">
         <button
           class="plus"
-          @click="addNewBubble"
+          @click="addBubble(title)"
         >
-          <img
-            class="plus"
-            src="@/assets/plus.png"
-          >
+          <img class="plus" src="@/assets/plus.png">
         </button>
       </div>
     </div>
@@ -24,19 +18,19 @@
       class="drag-div"
       ghost-class="ghost"
       animation="150"
-      :list="bubblesArray"
+      :list="bubbleArr"
       :group="{ name: 'people' }"
     >
       <bubble
-        v-for="(bubble, index) in bubblesArray"
+        v-for="(bubble, index) in bubbleArr"
         :key="index"
         :data="bubble"
-        @delete="bubblesArray.splice(index, 1)"
+        @delete="deleteBubble(index)"
       />
     </draggable>
     <div class="bubble-count-container">
       <h1 class="bubble-count">
-        {{ bubblesArray.length }}
+        {{ bubbleArr.length }}
       </h1>
     </div>
   </div>
@@ -57,19 +51,19 @@ export default {
       type: String,
       required: true
     },
-    bubblesArray: {
+    bubbleArr: {
       type: Array,
       required: true
     }
   },
   methods: {
-    addNewBubble() {
-      const imgId = Math.floor(Math.random() * 10);
-      this.bubblesArray.push({
-        // eslint-disable-next-line
-        imgSrc: require(`@/assets/list-icons/${imgId}.png`),
-        text: '',
-        editing: true
+    addBubble() {
+      this.$store.commit('addBubble', this.title);
+    },
+    deleteBubble(bubIndex) {
+      this.$store.commit('deleteBubble', {
+        title: this.title,
+        index: bubIndex
       });
     }
   }
@@ -102,6 +96,7 @@ export default {
 }
 
 .drag-div {
+
   height: 100%;
 }
 
