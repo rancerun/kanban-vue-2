@@ -1,7 +1,9 @@
 import { createApp } from './app';
 
-const { app, router } = createApp();
+const { app, store } = createApp();
 
-router.onReady(() => {
-  app.$mount('#app');
-});
+if (window.__INITIAL_STATE__) {
+  store.replaceState(window.__INITIAL_STATE__);
+}
+
+app.$mount('#app');
