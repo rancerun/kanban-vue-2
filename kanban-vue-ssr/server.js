@@ -1,4 +1,3 @@
-const Vue = require('vue');
 const server = require('express')();
 const createApp = require('./app');
 const renderer = require('vue-server-renderer').createRenderer({
@@ -7,14 +6,16 @@ const renderer = require('vue-server-renderer').createRenderer({
 
 server.get('*', (req, res) => {
   const context = { url: req.url };
-  const app = createApp(context);
-
-  renderer.renderToString(app, (err, html) => {
+  createApp(context).then(app => {
     if (err) {
-      res.status(500).end('Internal Server Error');
+      if (err.code == 404) {
+        res.status(404).end('page not found');
+      } else {
+        res.status(500).end('internal server error');
+      }
+    } else {
+      res.end(html);
     }
-    console.log(html);
-    res.end(html);
   });
 })
 
